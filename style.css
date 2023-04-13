@@ -15,7 +15,7 @@ body {
 }
 
 .header {
-  background-color: #4E5340;
+  background-color: #4e5340;
   display: grid;
   justify-items: center;
   align-items: center;
@@ -24,7 +24,7 @@ body {
 .header > .title {
   font-size: 2.5rem;
   margin: 30px;
-  color: #E2E8DD;
+  color: #e2e8dd;
   font-weight: 600;
 }
 
@@ -47,7 +47,7 @@ body {
   justify-items: left;
   gap: 20px;
   padding: 30px 50px;
-  background-color: #B7D1DA;
+  background-color: #b7d1da;
   border: 2px solid black;
   border-radius: 10px;
 }
@@ -71,12 +71,12 @@ form input {
   transition: all 1s ease;
 }
 
-form input[type='text']:hover {
+form input[type="text"]:hover {
   box-shadow: 2px 2px rgb(42, 0, 0);
   transition: all 0.5s ease;
 }
 
-form input[type='text']:focus {
+form input[type="text"]:focus {
   box-shadow: 4px 4px rgb(125, 0, 0);
   transition: all 1s ease;
 }
@@ -88,7 +88,7 @@ form > .start-game {
   border: 1px solid black;
   font-weight: 600;
   box-shadow: 2px 2px #84979e;
-  background-color: #E2E8DD;
+  background-color: #e2e8dd;
   transition: all 1s ease;
 }
 
@@ -105,20 +105,20 @@ form > .start-game:hover {
   --font-size: 3rem;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  background-color: #B7D1DA;
+  background-color: #b7d1da;
   width: calc(calc(var(--font-size) + 4rem) * 3);
   height: calc(calc(var(--font-size) + 4rem) * 3);
   box-shadow: 0px 0px 5px 5px #393d39;
   --border-width: 5px;
-  --border-color: #575A4B;
+  --border-color: #575a4b;
 }
 
-[row='1'] {
+[row="1"] {
   border-top: var(--border-width) solid var(--border-color);
   border-bottom: var(--border-width) solid var(--border-color);
 }
 
-[cul='1'] {
+[cul="1"] {
   border-left: var(--border-width) solid var(--border-color);
   border-right: var(--border-width) solid var(--border-color);
 }
@@ -132,7 +132,6 @@ form > .start-game:hover {
   font-weight: 600;
   transition: all 0.5s ease;
   background-color: #00c3ff;
-
 }
 
 .board > div:hover {
@@ -149,7 +148,7 @@ form > .start-game:hover {
 
 .curr-turn {
   font-weight: 600;
-  background-color: #95A3A4;
+  background-color: #95a3a4;
   color: rgb(255, 255, 255);
   padding: 10px 20px;
   box-shadow: 2px 2px rgb(65, 81, 59);
@@ -163,10 +162,10 @@ form > .start-game:hover {
   justify-self: center;
   margin-bottom: 50%;
   background-color: #555e3e;
-  color: #E2E8DD;
+  color: #e2e8dd;
   padding: 20px 40px;
   border-radius: 10px;
-  box-shadow: 0px 0px 5px 1px #95A3A4;
+  box-shadow: 0px 0px 5px 1px #95a3a4;
   border: 3px solid rgb(98, 98, 98);
   font-weight: 800;
   font-size: 2rem;
@@ -185,7 +184,7 @@ form > .start-game:hover {
   border-radius: 10px;
   font-weight: 600;
   color: white;
-  background-color: #2A2C24;
+  background-color: #2a2c24;
   transition: all 1s ease;
 }
 
@@ -202,6 +201,6 @@ form > .start-game:hover {
 }
 
 .footer > p {
-  color: #E2E8DD;
+  color: #e2e8dd;
   font-weight: 600;
 }
