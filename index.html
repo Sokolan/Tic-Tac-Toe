@@ -9,6 +9,41 @@
   <title>Document</title>
 </head>
 <body>
-  <h1>hi</h1>
+  <div class="header">
+    <p class="title">Tic Tac Toe</p>
+  </div>
+  <div class="game-container">
+    <form id="game-options">
+      <div class="player-one-name">
+        <label for="playerOneName">Player One Name</label>
+        <input type="text" id="playerOneName" placeholder="Player One">
+      </div>
+      <div class="player-two-name">
+        <label for="playerTwoName">Player Two Name</label>
+        <input type="text" id="playerTwoName" placeholder="Player Two">
+      </div>
+      <div class="play-against-at">
+        <label for="playAgainstAi">Play Against AI</label>
+        <input type="checkbox" id="playAgainstAi">
+      </div>
+      <div class="player-two-start">
+        <label for="PlayerTwoStart">Player Two Starts</label>
+        <input type="checkbox" id="PlayerTwoStart">
+      </div>
+      <button type="submit" form="game-options" class="start-game">Start Game</button>
+    </form>
+    <div class="board"></div>
+    <div class="game-info">
+      <p class="curr-turn"></p>
+      <p class="winner"></p>
+    </div>
+    <div class="new-game-buttons">
+      <button class="reset-game">Reset Game</button>
+      <button class="change-settings">Change Settings</button>
+    </div>
+  </div>
+  <div class="footer">
+    <p class="credits">Made by Sokolan</p>
+  </div>
 </body>
 </html>

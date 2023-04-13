@@ -69,10 +69,16 @@ const gameBoard = (() => {
 
   const checkIfCellAvailable = (row, cul) => (board[row][cul] === empty);
 
+  const getCellSign = (row, cul) => board[row][cul];
+
+  const boardEmptySign = () => empty;
+
   const getMovesMade = () => movesMade;
 
   return {
     getMovesMade,
+    boardEmptySign,
+    getCellSign,
     checkIfCellAvailable,
     cleanBoard,
     getBoard,
@@ -85,8 +91,10 @@ const gameBoard = (() => {
 //
 const gameControl = (() => {
   let gameState;
+  let winner;
   const players = [];
   let currPlayer;
+  let firstPlayer;
 
   const board = gameBoard;
 
@@ -112,6 +120,7 @@ const gameControl = (() => {
     // player one 0, player two 1 in array
     board.cleanBoard();
     currPlayer = playerOneStart ? 0 : 1;
+    firstPlayer = currPlayer;
     gameState = 'undesided';
 
     const playerOneSign = playerOneStart ? 'X' : 'O';
@@ -125,6 +134,16 @@ const gameControl = (() => {
     players.push(playerOne);
     players.push(playerTwo);
 
+    if (!players[currPlayer].isHuman) {
+      aiPlayer.makeEasyMove();
+    }
+  };
+
+  const resetGame = () => {
+    gameState = 'undesided';
+    board.cleanBoard();
+    winner = null;
+    currPlayer = firstPlayer;
     if (!players[currPlayer].isHuman) {
       aiPlayer.makeEasyMove();
     }
@@ -146,6 +165,7 @@ const gameControl = (() => {
     if (board.checkForWin(players[currPlayer].getSign())) {
       console.log(`${players[currPlayer].getName()} Wan!`);
       gameState = 'wan';
+      winner = players[currPlayer];
       return;
     }
 
@@ -163,15 +183,136 @@ const gameControl = (() => {
 
   const getCurrPlayer = () => currPlayer;
 
+  const getCurrPlayerName = () => players[currPlayer].getName();
+
   const getGameState = () => gameState;
+
+  const getBoard = () => board;
+  
+  const getWinner = () => winner;
 
   return {
     initiateGame,
+    resetGame,
     makeMove,
     getCurrPlayer,
+    getCurrPlayerName,
     getGameState,
+    getWinner,
+    getBoard,
   };
 })();
 
-const game = gameControl;
-game.initiateGame('dambo', 'Baboon', true, false);
+const displayHandler = (() => {
+  const game = gameControl;
+
+  const updateCurrentTurn = () => {
+    document.querySelector('p.curr-turn').textContent = `${game.getCurrPlayerName()}'s Turn`;
+  };
+
+  const updateWinner = (winner) => {
+    const winnerElement = document.querySelector('p.winner');
+    winnerElement.textContent = winner;
+    winnerElement.style.display = 'block';
+  };
+
+  const updateDisplayedBoard = () => {
+    const board = game.getBoard();
+    for (let row = 0; row < 3; row += 1) {
+      for (let cul = 0; cul < 3; cul += 1) {
+        const cell = document.querySelector(`[row="${row}"][cul="${cul}"]`);
+        const sign = board.getCellSign(row, cul);
+        if (sign !== board.boardEmptySign()) {
+          cell.textContent = sign;
+        }
+        else {
+          cell.textContent = '';
+        }
+      }
+    }
+    updateCurrentTurn();
+    const gameState = game.getGameState();
+    if (gameState === 'tie') {
+      updateCurrentTurn('tie');
+    }
+    if (gameState === 'wan') {
+      updateWinner(`Player '${game.getWinner().getName()}' Wan!`);
+    }
+  };
+
+  const userMoveHandler = (event) => {
+    const row = event.target.getAttribute('row');
+    const cul = event.target.getAttribute('cul');
+    game.makeMove(row, cul);
+    updateDisplayedBoard();
+  };
+
+  const createBoardDisplay = () => {
+    const container = document.querySelector('.board');
+    for (let row = 0; row < 3; row += 1) {
+      for (let cul = 0; cul < 3; cul += 1) {
+        const cellElement = document.createElement('div');
+        cellElement.setAttribute('row', `${row}`);
+        cellElement.setAttribute('cul', `${cul}`);
+        cellElement.addEventListener('click', userMoveHandler);
+        container.appendChild(cellElement);
+      }
+    }
+    updateCurrentTurn();
+  };
+
+  const resetGame = () => {
+    game.resetGame();
+    updateDisplayedBoard();
+    document.querySelector('.winner').style.display = 'none';
+  };
+  document.querySelector('.reset-game').addEventListener('click', resetGame);
+
+  const changeSettings = () => {
+    resetGame();
+    document.querySelector('.board').replaceChildren();
+    optionsScreen();
+  };
+  document.querySelector('.change-settings').addEventListener('click', changeSettings);
+
+  const startGame = (event) => {
+    event.preventDefault();
+    // Switch between game options screen and board screen
+    document.querySelector('form').style.display = 'none';
+    document.querySelector('.board').style.display = 'grid';
+    document.querySelector('.new-game-buttons').style.display = 'flex';
+    document.querySelector('.game-info').style.display = 'flex';
+
+    let playerOneName = document.querySelector('#playerOneName').value;
+    if (playerOneName === '') {
+      playerOneName = 'Player One';
+    }
+    let playerTwoName = document.querySelector('#playerTwoName').value;
+    if (playerTwoName === '') {
+      playerTwoName = 'Player Two';
+    }
+    const playAgainstAi = document.querySelector('#playAgainstAi').checked;
+    const playerOneStart = !(document.querySelector('#PlayerTwoStart').checked);
+    game.initiateGame(playerOneName, playerTwoName, playAgainstAi, playerOneStart);
+    createBoardDisplay();
+    if (playAgainstAi) {
+      updateDisplayedBoard();
+    }
+  };
+
+  const optionsScreen = () => {
+    document.querySelector('.board').style.display = 'none';
+    document.querySelector('.new-game-buttons').style.display = 'none';
+    document.querySelector('.game-info').style.display = 'none';
+    document.querySelector('form').style.display = 'grid';
+    const startGameButton = document.querySelector('.start-game');
+    startGameButton.addEventListener('click', startGame);
+  };
+
+  return {
+    optionsScreen,
+  };
+})();
+
+const display = displayHandler;
+display.optionsScreen();
