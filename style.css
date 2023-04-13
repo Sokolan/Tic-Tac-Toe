@@ -150,6 +150,7 @@ form > .start-game:hover {
 .curr-turn {
   font-weight: 600;
   background-color: #95A3A4;
+  color: rgb(255, 255, 255);
   padding: 10px 20px;
   box-shadow: 2px 2px rgb(65, 81, 59);
   border-radius: 10px;

@@ -188,7 +188,7 @@ const gameControl = (() => {
   const getGameState = () => gameState;
 
   const getBoard = () => board;
-  
+
   const getWinner = () => winner;
 
   return {
@@ -273,6 +273,7 @@ const displayHandler = (() => {
     document.querySelector('.board').replaceChildren();
     optionsScreen();
   };
+
   document.querySelector('.change-settings').addEventListener('click', changeSettings);
 
   const startGame = (event) => {
